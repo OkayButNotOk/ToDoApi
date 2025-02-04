@@ -1,4 +1,5 @@
-﻿using ToDoApi.Interfaces;
+﻿using ToDoApi.DTOs;
+using ToDoApi.Interfaces;
 using ToDoApi.Models;
 using ToDoApi.Responses;
 
@@ -12,13 +13,20 @@ namespace ToDoApi.Services
             _userData = userData;
         }
 
-        public ServiceResponse RegisterUser(User user)
+        public ServiceResponse RegisterUser(UserDto userDto)
         {
-            CheckIfUsernameValid(user.Username);
-            CheckIfPasswordValid(user.PasswordSalt);
-            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordSalt);
-            
+            CheckIfUsernameValid(userDto.Username);
+            CheckIfPasswordValid(userDto.Password);
+
+            var hashPassword = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
+            User user = new(){ Username = userDto.Username, CreatedAt = DateTime.Now, Email = userDto.Email, PasswordHash = hashPassword };
+
             return _userData.RegisterUser(user);
+        }
+
+        public User GetUser(string username)
+        {
+            return _userData.GetUser(username);
         }
 
         private static void CheckIfPasswordValid(string passwordSalt)
@@ -33,14 +41,12 @@ namespace ToDoApi.Services
                     throw new ArgumentException("Password must be at least 8 characters long");
                 case string s when s.Length > 20:
                     throw new ArgumentException("Password must be at most 20 characters long");
-                case string s when !s.Any(char.IsDigit):
-                    throw new ArgumentException("Password must contain at least one digit");
-                case string s when !s.Any(char.IsUpper):
-                    throw new ArgumentException("Password must contain at least one uppercase letter");
-                case string s when !s.Any(char.IsLower):
-                    throw new ArgumentException("Password must contain at least one lowercase letter");
-                case string s when !s.Any(char.IsSymbol):
-                    throw new ArgumentException("Password must contain at least one special character");
+                //case string s when !s.Any(char.IsDigit):
+                //    throw new ArgumentException("Password must contain at least one digit");
+                //case string s when !s.Any(char.IsUpper):
+                //    throw new ArgumentException("Password must contain at least one uppercase letter");
+                //case string s when !s.Any(char.IsLower):
+                //    throw new ArgumentException("Password must contain at least one lowercase letter");
                 default:
                     break;
             }
@@ -61,6 +67,6 @@ namespace ToDoApi.Services
                 default:
                     break;
                 }
-            }
+        }
     }
 }

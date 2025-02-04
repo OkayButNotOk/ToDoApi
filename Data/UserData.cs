@@ -40,10 +40,10 @@ namespace ToDoApi.Data
             return System.Threading.Tasks.Task.FromResult(user);
         }
 
-        public Task<User> GetUser(int id)
+        public User GetUser(string username)
         {
-            var user = _context.Users.Find(id);
-            return System.Threading.Tasks.Task.FromResult(user);
+            var user = _context.Users.FirstOrDefault(x => x.Username == username);
+            return user;
         }
     }
 }

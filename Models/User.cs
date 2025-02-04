@@ -19,8 +19,6 @@
         [MaxLength(255)]
         public string PasswordHash { get; set; }
 
-        public string PasswordSalt { get; set; }
-
         [Required]
         [MaxLength(100)]
         [EmailAddress]
@@ -30,7 +28,5 @@
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public DateTime? UpdatedAt { get; set; }
-
-        public List<Task> Tasks { get; set; } = new List<Task>();
     }
 }

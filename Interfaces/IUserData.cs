@@ -12,6 +12,6 @@ namespace ToDoApi.Interfaces
 
         public Task<User> DeleteUser(int id);
 
-        public Task<User> GetUser(int id);
+        public User GetUser(string username);
     }
 }

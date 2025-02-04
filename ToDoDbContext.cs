@@ -34,11 +34,6 @@ namespace ToDoApi
                 entity.Property(e => e.CreatedAt).IsRequired(); // CreatedAt zorunlu
                 entity.Property(e => e.UpdatedAt).IsRequired(false); // UpdatedAt opsiyonel
 
-                // User ile Task arasındaki ilişki (one-to-many)
-                entity.HasOne(t => t.User) // Her Task bir User'a ait
-                      .WithMany(u => u.Tasks) // Bir User'ın birden fazla Task'ı olabilir
-                      .HasForeignKey(t => t.UserId) // Foreign key: UserId
-                      .OnDelete(DeleteBehavior.Cascade); // User silinirse Task'ları da sil
             });
         }
     }
