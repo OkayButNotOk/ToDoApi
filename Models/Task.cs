@@ -10,10 +10,10 @@ namespace ToDoApi.Models
         public int Id { get; set; }
         [Required]
         [MaxLength]
-        public string Title { get; set; }
+        public string? Title { get; set; }
         [Required]
         [MaxLength]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
         [StringLength(15)]
         public string Status { get; set; } // "todo", "in-progress", "done"

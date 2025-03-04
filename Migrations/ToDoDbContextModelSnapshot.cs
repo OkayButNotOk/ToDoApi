@@ -98,17 +98,12 @@ namespace ToDoApi.Migrations
             modelBuilder.Entity("ToDoApi.Models.Task", b =>
                 {
                     b.HasOne("ToDoApi.Models.User", "User")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ToDoApi.Models.User", b =>
-                {
-                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }
